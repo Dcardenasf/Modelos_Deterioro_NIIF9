@@ -1,0 +1,2 @@
+# Descripción general del proyecto
+Este repositorio contiene el código y documentación para el desarrollo de modelos de deterioro conforme a la NIIF 9. Se incluyen datos sintéticos, experimentos y análisis.

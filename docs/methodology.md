@@ -1,0 +1,2 @@
+# Explicación de la metodología (CRISP-DM)
+Este documento describe la metodología CRISP-DM aplicada al desarrollo del modelo de deterioro, desde la comprensión del negocio hasta la evaluación del modelo.
