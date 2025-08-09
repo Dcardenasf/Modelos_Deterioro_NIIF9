@@ -4,3 +4,4 @@ scikit-learn
 faker
 matplotlib
 seaborn
+openpyxl
