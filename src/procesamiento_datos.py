@@ -1,6 +1,8 @@
 # Limpieza y transformación de datos
 import pandas as pd
 import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
 import os
 import re
 
@@ -43,5 +45,26 @@ def revision_inicial(df):
     print("\nValores duplicados:")
     print(df.duplicated().sum())
 
+def boxplot_numericos(df):
+    """
+    Genera gráficos de caja para variables numéricas en el DataFrame.
+    """
+    num_cols = df.select_dtypes(include=[np.number]).columns
+    for col in num_cols:
+        plt.figure(figsize=(10, 5))
+        sns.boxplot(x=df[col])
+        plt.title(f"Boxplot de {col}")
+        plt.show()
+
+def hist_numericos(df):
+    """
+    Genera histogramas para variables numéricas en el DataFrame.
+    """
+    num_cols = df.select_dtypes(include=[np.number]).columns
+    for col in num_cols:
+        plt.figure(figsize=(10, 5))
+        sns.histplot(df[col], kde=True)
+        plt.title(f"Histograma de {col}")
+        plt.show()
 
 print("Función de procesamiento de datos cargadas correctamente.")
