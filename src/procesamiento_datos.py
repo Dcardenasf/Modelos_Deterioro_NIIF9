@@ -45,26 +45,63 @@ def revision_inicial(df):
     print("\nValores duplicados:")
     print(df.duplicated().sum())
 
-def boxplot_numericos(df):
+def boxplot_numericos(df, outliers=True):
     """
     Genera gráficos de caja para variables numéricas en el DataFrame.
     """
     num_cols = df.select_dtypes(include=[np.number]).columns
-    for col in num_cols:
-        plt.figure(figsize=(10, 5))
-        sns.boxplot(x=df[col])
-        plt.title(f"Boxplot de {col}")
-        plt.show()
+    sns.set(style="whitegrid")
 
-def hist_numericos(df):
+    if outliers == True:
+        for col in num_cols:
+            plt.figure(figsize=(10, 5))
+            sns.boxplot(x=df[col])
+            plt.title(f"Boxplot de {col} con outliers")
+            plt.show()
+    else:
+
+        df_no_outliers = df.copy()
+        for col in num_cols:
+            Q1 = df_no_outliers[col].quantile(0.25)
+            Q3 = df_no_outliers[col].quantile(0.75)
+            IQR = Q3 - Q1
+            lower_bound = Q1 - 1.5 * IQR
+            upper_bound = Q3 + 1.5 * IQR
+            df_no_outliers = df_no_outliers[(df_no_outliers[col] >= lower_bound) & (df_no_outliers[col] <= upper_bound)]
+
+        for col in num_cols:
+            plt.figure(figsize=(10, 5))
+            sns.boxplot(x=df_no_outliers[col])
+            plt.title(f"Boxplot de {col} sin outliers")
+            plt.show()
+
+def hist_numericos(df, outliers=True):
     """
     Genera histogramas para variables numéricas en el DataFrame.
     """
     num_cols = df.select_dtypes(include=[np.number]).columns
-    for col in num_cols:
-        plt.figure(figsize=(10, 5))
-        sns.histplot(df[col], kde=True)
-        plt.title(f"Histograma de {col}")
-        plt.show()
+    sns.set(style="whitegrid")
+
+    if outliers == True:
+        for col in num_cols:
+            plt.figure(figsize=(10, 5))
+            sns.histplot(df[col], kde=True)
+            plt.title(f"Histograma de {col} con outliers")
+            plt.show()
+    else:
+        df_no_outliers = df.copy()
+        for col in num_cols:
+            Q1 = df_no_outliers[col].quantile(0.25)
+            Q3 = df_no_outliers[col].quantile(0.75)
+            IQR = Q3 - Q1
+            lower_bound = Q1 - 1.5 * IQR
+            upper_bound = Q3 + 1.5 * IQR
+            df_no_outliers = df_no_outliers[(df_no_outliers[col] >= lower_bound) & (df_no_outliers[col] <= upper_bound)]    
+
+        for col in num_cols:
+            plt.figure(figsize=(10, 5))
+            sns.histplot(df_no_outliers[col], kde=True)
+            plt.title(f"Histograma de {col} sin outliers")
+            plt.show()
 
 print("Función de procesamiento de datos cargadas correctamente.")
