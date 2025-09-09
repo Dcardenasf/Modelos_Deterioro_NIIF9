@@ -7,6 +7,8 @@ import os
 import re
 import datetime as dt
 from pandas.tseries.offsets import MonthEnd
+import warnings
+warnings.filterwarnings('ignore')
 
 plt.style.use('default')
 sns.set_palette("husl")
