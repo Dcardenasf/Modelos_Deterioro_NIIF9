@@ -1,8 +1,38 @@
-pandas
-numpy
-scikit-learn
-faker
-matplotlib
-seaborn
-openpyxl
-datetime
+# Librerías principales para análisis de datos
+pandas>=1.5.0
+numpy>=1.21.0
+
+# Librerías de Machine Learning
+scikit-learn>=1.0.0  # Base
+xgboost>=1.5.0
+
+# Módulos específicos de scikit-learn
+sklearn-pandas>=2.2.0  # Para integración con pandas
+imbalanced-learn>=0.8.0  # Para manejo de datos desbalanceados
+category_encoders>=2.3.0  # Para codificación de variables categóricas
+
+# Métricas y utilidades de sklearn
+scikit-optimize>=0.9.0  # Para optimización de hiperparámetros
+yellowbrick>=1.4  # Para visualización de métricas de ML
+
+# Librerías para validación cruzada y evaluación
+scikit-plot>=0.3.7  # Para visualización de métricas de validación
+
+# Librerías para visualización
+matplotlib>=3.5.0
+seaborn>=0.11.0
+
+# Librería para interpretabilidad de modelos
+shap>=0.40.0
+
+# Librerías para manejo de datos
+openpyxl>=3.0.0
+faker>=8.0.0
+joblib>=1.1.0
+
+# Librerías para Jupyter notebooks
+jupyter>=1.0.0
+ipykernel>=6.0.0
+
+# Librería para gestión de rutas y ambiente
+python-dotenv>=0.19.0
