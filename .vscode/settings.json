@@ -1,5 +1,33 @@
 {
     "python.analysis.extraPaths": [
         "./src"
+    ],
+    "git.ignoreLimitWarning": true,
+    "cSpell.language": "en,es",
+    "cSpell.enabled": true,
+    "cSpell.enableFiletypes": [
+        "jupyter",
+        "python",
+        "markdown"
+    ],
+    "cSpell.ignorePaths": [
+        "package-lock.json",
+        "node_modules",
+        "venv",
+        ".git/objects",
+        ".vscode",
+        ".venv"
+    ],
+    "cSpell.words": [],
+    "cSpell.userWords": [],
+    "cSpell.allowCompoundWords": true,
+    "cSpell.languageSettings": [
+        {
+            "languageId": "jupyter",
+            "includeRegExpList": [
+                "CStyleComment",
+                "strings"
+            ]
+        }
     ]
 }

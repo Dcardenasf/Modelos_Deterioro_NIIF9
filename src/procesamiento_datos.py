@@ -12,9 +12,11 @@ warnings.filterwarnings('ignore')
 
 plt.style.use('default')
 sns.set_palette("husl")
-#pd.set_option('display.max_columns', None)
+#pd.set_option('display.max_columns
 
+# Funciones de carga y exportación de datos:
 def cargar_datos(ruta_archivo, sep=','):
+
     """
     Carga los datos desde un archivo CSV.
     """
@@ -30,18 +32,32 @@ def cargar_datos(ruta_archivo, sep=','):
     except Exception as e:
         raise Exception(f"Error al cargar el archivo: {e}")
 
+def exportar_csv(df, ruta_salida, sep=',', index=False):
+    """
+    Exporta el DataFrame a un archivo CSV.
+    """
+    try:
+        df.to_csv(ruta_salida, sep=sep, index=index, encoding='utf-8')
+        print(f"Datos exportados exitosamente a {ruta_salida}")
+    except Exception as e:
+        raise Exception(f"Error al exportar los datos: {e}")
+
 def revision_inicial(df):
     """
     Realiza una revisión inicial del DataFrame.
     """
+    observaciones = df.shape[0]
+    columnas = df.columns
+    print(f"Cantidad de observaciones: {observaciones}")
+    print("="*60)
     print("Primeras filas del DataFrame:")
     print("="*60)
-    display(df.head())
+    print(df.head())
     print("\nInformación del DataFrame:")
     print("="*60)
     print(df.info())
     try:
-        print("\nDescripción datos categoricos del DataFrame:")
+        print("\nDescripción datos categóricos del DataFrame:")
         print("="*60)
         print(df.describe(include=[object]))
     except ValueError:
@@ -54,14 +70,51 @@ def revision_inicial(df):
         print("No hay datos cuantitativos para describir.")
     print("\nValores nulos por columna:")
     print("="*60)
-    print(df.isnull().sum())
+    for columna in columnas:
+        nulos = df[columna].isnull().sum()
+        porcentaje_nulos = nulos / observaciones
+        print(f"{columna}: {porcentaje_nulos:.2%}")
     print("\nValores duplicados:")
     print("="*60)
     print(df.duplicated().sum())
-    print("\n" + "="*60)
-    print("Fin de revisión inicial para este DataFrame")
+    print("\nFin de revisión inicial para este DataFrame")
     print("="*60 + "\n")
+
+#Funciones de transformación y limpieza de datos:
+
+def convertir_fecha(df: pd.DataFrame, columnas: list[str]) -> pd.DataFrame:
+    """Versión simplificada que detecta automáticamente el formato."""
+        
+    for col in columnas:
+        # Primero intenta Excel
+        valores_num = pd.to_numeric(df[col], errors='coerce')
+        if valores_num.notna().sum() > 0:
+            df[col] = pd.to_datetime(valores_num, unit='D', origin='1899-12-30', errors='coerce')
+        else:
+            # Si no es Excel, deja que pandas detecte el formato
+            df[col] = pd.to_datetime(df[col], errors='coerce')
     
+    return df
+
+def convertir_numerico(df: pd.DataFrame, columnas: list[str]) -> pd.DataFrame:
+    """Versión simplificada para formato colombiano."""
+        
+    for col in columnas:
+        if col in df.columns:
+            # Limpiar y convertir
+            df[col] = (df[col]
+                .astype(str)
+                .str.strip()
+                .str.replace(' ', '')
+                .str.replace('.', '')      # Quitar miles
+                .str.replace(',', '.')     # Decimal a punto
+                .replace(['nan', 'N/A', '--'], np.nan))
+            
+            df[col] = pd.to_numeric(df[col], errors='coerce')
+    
+    return df
+
+# Funciones de visualización de datos:
 
 def boxplot_numericos(df, outliers=True):
     """
@@ -92,7 +145,7 @@ def boxplot_numericos(df, outliers=True):
                     lower_bound = Q1 - 1.5 * IQR
                     upper_bound = Q3 + 1.5 * IQR
                     df_no_outliers = df_no_outliers[(df_no_outliers[col] >= lower_bound) & 
-                                                   (df_no_outliers[col] <= upper_bound)]
+                                                (df_no_outliers[col] <= upper_bound)]
 
             plt.figure(figsize=(10, 5))
             if len(df_no_outliers[df_no_outliers[col] > 0]) > 0:  # Si hay valores mayores a 0
@@ -128,7 +181,7 @@ def hist_numericos(df, outliers=True):
                     lower_bound = Q1 - 1.5 * IQR
                     upper_bound = Q3 + 1.5 * IQR
                     df_no_outliers = df_no_outliers[(df_no_outliers[col] >= lower_bound) & 
-                                                   (df_no_outliers[col] <= upper_bound)]
+                                                (df_no_outliers[col] <= upper_bound)]
             
             plt.figure(figsize=(10, 5))
             if len(df_no_outliers[df_no_outliers[col] > 0]) > 0:  # Si hay valores mayores a 0
@@ -178,7 +231,7 @@ def visualizar_distribucion(df, outliers=True):
                     lower_bound = Q1 - 1.5 * IQR
                     upper_bound = Q3 + 1.5 * IQR
                     df_no_outliers = df_no_outliers[(df_no_outliers[col] >= lower_bound) & 
-                                                   (df_no_outliers[col] <= upper_bound)]
+                                                (df_no_outliers[col] <= upper_bound)]
 
             fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 5))
             if len(df_no_outliers[df_no_outliers[col] > 0]) > 0:  # Si hay valores mayores a 0
@@ -216,5 +269,6 @@ def visualizar_categoricas (df,columna):
         plt.ylabel(col)
         plt.tight_layout()
         plt.show()
+
 
 print("Función de procesamiento de datos cargadas correctamente.")
