@@ -38,7 +38,7 @@ ipykernel>=6.0.0
 python-dotenv>=0.19.0
 
 # Manejos de bases de datos
-duckdb>=0.6.0pip
+duckdb>=0.6.0
 
 #manejo de fechas
 datetime>=4.3.1  
