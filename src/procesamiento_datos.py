@@ -37,7 +37,7 @@ def exportar_csv(df, ruta_salida, sep=',', index=False):
     Exporta el DataFrame a un archivo CSV.
     """
     try:
-        df.to_csv(ruta_salida, sep=sep, index=index, encoding='utf-8')
+        df.to_csv(ruta_salida, sep=sep, index=index, encoding='utf-8',date_format='%d/%m/%Y')
         print(f"Datos exportados exitosamente a {ruta_salida}")
     except Exception as e:
         raise Exception(f"Error al exportar los datos: {e}")
