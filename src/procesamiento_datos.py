@@ -11,7 +11,9 @@ import warnings
 warnings.filterwarnings('ignore')
 
 plt.style.use('default')
-sns.set_palette("husl")
+sns.set_palette("pastel")
+sns.set_theme(style='whitegrid')
+sns.set_context()
 #pd.set_option('display.max_columns
 
 # Funciones de carga y exportación de datos:
@@ -82,7 +84,7 @@ def revision_inicial(df):
 
 #Funciones de transformación y limpieza de datos:
 
-def convertir_fecha(df: pd.DataFrame, columnas: list[str]) -> pd.DataFrame:
+def convertir_fecha(df: pd.DataFrame, columnas: list[str],dayfirst=True) -> pd.DataFrame:
     """Versión simplificada que detecta automáticamente el formato."""
         
     for col in columnas:
@@ -92,7 +94,7 @@ def convertir_fecha(df: pd.DataFrame, columnas: list[str]) -> pd.DataFrame:
             df[col] = pd.to_datetime(valores_num, unit='D', origin='1899-12-30', errors='coerce')
         else:
             # Si no es Excel, deja que pandas detecte el formato
-            df[col] = pd.to_datetime(df[col], errors='coerce')
+            df[col] = pd.to_datetime(df[col], dayfirst=dayfirst, errors='coerce')
     
     return df
 
