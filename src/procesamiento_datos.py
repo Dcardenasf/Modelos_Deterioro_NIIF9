@@ -116,6 +116,46 @@ def convertir_numerico(df: pd.DataFrame, columnas: list[str]) -> pd.DataFrame:
     
     return df
 
+def crear_bines(df, columna, numero_bines=10, etiquetas=None, metodo='quantile'):
+    """
+    Crea columnas binarias para cada bin de una variable numérica.
+
+    Args:
+        df (pd.DataFrame): DataFrame con los datos.
+        columna (str): Nombre de la columna a binarizar.
+        numero_bines (int): Número de bines a crear.
+        etiquetas (list, optional): Etiquetas para los bines.
+        metodo (str): 'quantile' para qcut (bines de igual frecuencia) o 'uniform' para cut (bines de igual ancho).
+
+    Returns:
+        pd.DataFrame: DataFrame con nuevas columnas binarias por bin.
+    """
+    try:
+        # Crear los bines
+        if metodo == 'quantile':
+            binned = pd.qcut(df[columna], q=numero_bines, labels=etiquetas, duplicates='drop')
+        elif metodo == 'uniform':
+            binned = pd.cut(df[columna], bins=numero_bines, labels=etiquetas)
+        else:
+            raise ValueError("Método no reconocido. Use 'quantile' o 'uniform'.")
+
+        # Si no hay etiquetas, usar los intervalos como etiquetas
+        if etiquetas is None:
+            etiquetas = binned.cat.categories
+
+        # Crear columnas binarias para cada bin
+        for bin_label in etiquetas:
+            col_name = f"{columna}_bin_{bin_label}"
+            df[col_name] = (binned == bin_label).astype(int)
+
+        print(f"Columnas binarias creadas exitosamente para '{columna}' usando método '{metodo}'.")
+        print(f"Distribución de bines:\n{binned.value_counts(sort=False)}")
+
+    except Exception as e:
+        print(f"Error al crear bines: {e}")
+
+    return df
+
 # Funciones de visualización de datos:
 
 def boxplot_numericos(df, outliers=True):
