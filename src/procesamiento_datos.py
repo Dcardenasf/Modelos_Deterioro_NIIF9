@@ -14,35 +14,40 @@ plt.style.use('default')
 sns.set_palette("pastel")
 sns.set_theme(style='whitegrid')
 sns.set_context()
-#pd.set_option('display.max_columns
+# pd.set_option('display.max_columns
 
 # Funciones de carga y exportación de datos:
-def cargar_datos(ruta_archivo, sep=','):
 
+
+def cargar_datos(ruta_archivo, sep=','):
     """
     Carga los datos desde un archivo CSV.
     """
     try:
         if ruta_archivo.endswith('.csv'):
-            return pd.read_csv(ruta_archivo,sep=sep, encoding='utf-8', low_memory=False)
+            return pd.read_csv(ruta_archivo, sep=sep, encoding='utf-8', low_memory=False)
         elif ruta_archivo.endswith('.xlsx'):
             return pd.read_excel(ruta_archivo)
         else:
-            raise ValueError("Formato de archivo no soportado. Use .csv o .xlsx")
+            raise ValueError(
+                "Formato de archivo no soportado. Use .csv o .xlsx")
     except FileNotFoundError:
         raise FileNotFoundError(f"El archivo {ruta_archivo} no se encuentra.")
     except Exception as e:
         raise Exception(f"Error al cargar el archivo: {e}")
+
 
 def exportar_csv(df, ruta_salida, sep=',', index=False):
     """
     Exporta el DataFrame a un archivo CSV.
     """
     try:
-        df.to_csv(ruta_salida, sep=sep, index=index, encoding='utf-8',date_format='%d/%m/%Y')
+        df.to_csv(ruta_salida, sep=sep, index=index,
+                  encoding='utf-8', date_format='%d/%m/%Y')
         print(f"Datos exportados exitosamente a {ruta_salida}")
     except Exception as e:
         raise Exception(f"Error al exportar los datos: {e}")
+
 
 def revision_inicial(df):
     """
@@ -82,39 +87,44 @@ def revision_inicial(df):
     print("\nFin de revisión inicial para este DataFrame")
     print("="*60 + "\n")
 
-#Funciones de transformación y limpieza de datos:
+# Funciones de transformación y limpieza de datos:
 
-def convertir_fecha(df: pd.DataFrame, columnas: list[str],dayfirst=True) -> pd.DataFrame:
+
+def convertir_fecha(df: pd.DataFrame, columnas: list[str], dayfirst=True) -> pd.DataFrame:
     """Versión simplificada que detecta automáticamente el formato."""
-        
+
     for col in columnas:
         # Primero intenta Excel
         valores_num = pd.to_numeric(df[col], errors='coerce')
         if valores_num.notna().sum() > 0:
-            df[col] = pd.to_datetime(valores_num, unit='D', origin='1899-12-30', errors='coerce')
+            df[col] = pd.to_datetime(
+                valores_num, unit='D', origin='1899-12-30', errors='coerce')
         else:
             # Si no es Excel, deja que pandas detecte el formato
-            df[col] = pd.to_datetime(df[col], dayfirst=dayfirst, errors='coerce')
-    
+            df[col] = pd.to_datetime(
+                df[col], dayfirst=dayfirst, errors='coerce')
+
     return df
+
 
 def convertir_numerico(df: pd.DataFrame, columnas: list[str]) -> pd.DataFrame:
     """Versión simplificada para formato colombiano."""
-        
+
     for col in columnas:
         if col in df.columns:
             # Limpiar y convertir
             df[col] = (df[col]
-                .astype(str)
-                .str.strip()
-                .str.replace(' ', '')
-                .str.replace('.', '')      # Quitar miles
-                .str.replace(',', '.')     # Decimal a punto
-                .replace(['nan', 'N/A', '--'], np.nan))
-            
+                       .astype(str)
+                       .str.strip()
+                       .str.replace(' ', '')
+                       .str.replace('.', '')      # Quitar miles
+                       .str.replace(',', '.')     # Decimal a punto
+                       .replace(['nan', 'N/A', '--'], np.nan))
+
             df[col] = pd.to_numeric(df[col], errors='coerce')
-    
+
     return df
+
 
 def crear_bines(df, columna, numero_bines=10, etiquetas=None, metodo='quantile'):
     """
@@ -133,11 +143,13 @@ def crear_bines(df, columna, numero_bines=10, etiquetas=None, metodo='quantile')
     try:
         # Crear los bines
         if metodo == 'quantile':
-            binned = pd.qcut(df[columna], q=numero_bines, labels=etiquetas, duplicates='drop')
+            binned = pd.qcut(df[columna], q=numero_bines,
+                             labels=etiquetas, duplicates='drop')
         elif metodo == 'uniform':
             binned = pd.cut(df[columna], bins=numero_bines, labels=etiquetas)
         else:
-            raise ValueError("Método no reconocido. Use 'quantile' o 'uniform'.")
+            raise ValueError(
+                "Método no reconocido. Use 'quantile' o 'uniform'.")
 
         # Si no hay etiquetas, usar los intervalos como etiquetas
         if etiquetas is None:
@@ -148,7 +160,8 @@ def crear_bines(df, columna, numero_bines=10, etiquetas=None, metodo='quantile')
             col_name = f"{columna}_bin_{bin_label}"
             df[col_name] = (binned == bin_label).astype(int)
 
-        print(f"Columnas binarias creadas exitosamente para '{columna}' usando método '{metodo}'.")
+        print(
+            f"Columnas binarias creadas exitosamente para '{columna}' usando método '{metodo}'.")
         print(f"Distribución de bines:\n{binned.value_counts(sort=False)}")
 
     except Exception as e:
@@ -157,6 +170,7 @@ def crear_bines(df, columna, numero_bines=10, etiquetas=None, metodo='quantile')
     return df
 
 # Funciones de visualización de datos:
+
 
 def boxplot_numericos(df, outliers=True):
     """
@@ -186,17 +200,19 @@ def boxplot_numericos(df, outliers=True):
                 if IQR > 0:  # Solo aplicar si hay dispersión en los datos
                     lower_bound = Q1 - 1.5 * IQR
                     upper_bound = Q3 + 1.5 * IQR
-                    df_no_outliers = df_no_outliers[(df_no_outliers[col] >= lower_bound) & 
-                                                (df_no_outliers[col] <= upper_bound)]
+                    df_no_outliers = df_no_outliers[(df_no_outliers[col] >= lower_bound) &
+                                                    (df_no_outliers[col] <= upper_bound)]
 
             plt.figure(figsize=(10, 5))
-            if len(df_no_outliers[df_no_outliers[col] > 0]) > 0:  # Si hay valores mayores a 0
+            # Si hay valores mayores a 0
+            if len(df_no_outliers[df_no_outliers[col] > 0]) > 0:
                 sns.boxplot(x=df_no_outliers[df_no_outliers[col] > 0][col])
                 plt.title(f"Boxplot de {col} sin outliers (valores > 0)")
             else:
                 sns.boxplot(x=df_no_outliers[col])
                 plt.title(f"Boxplot de {col} sin outliers")
             plt.show()
+
 
 def hist_numericos(df, outliers=True):
     """
@@ -222,17 +238,20 @@ def hist_numericos(df, outliers=True):
                 if IQR > 0:  # Solo aplicar si hay dispersión en los datos
                     lower_bound = Q1 - 1.5 * IQR
                     upper_bound = Q3 + 1.5 * IQR
-                    df_no_outliers = df_no_outliers[(df_no_outliers[col] >= lower_bound) & 
-                                                (df_no_outliers[col] <= upper_bound)]
-            
+                    df_no_outliers = df_no_outliers[(df_no_outliers[col] >= lower_bound) &
+                                                    (df_no_outliers[col] <= upper_bound)]
+
             plt.figure(figsize=(10, 5))
-            if len(df_no_outliers[df_no_outliers[col] > 0]) > 0:  # Si hay valores mayores a 0
-                sns.histplot(data=df_no_outliers[df_no_outliers[col] > 0], x=col, kde=True)
+            # Si hay valores mayores a 0
+            if len(df_no_outliers[df_no_outliers[col] > 0]) > 0:
+                sns.histplot(
+                    data=df_no_outliers[df_no_outliers[col] > 0], x=col, kde=True)
                 plt.title(f"Histograma de {col} sin outliers (valores > 0)")
             else:
                 sns.histplot(data=df_no_outliers, x=col, kde=True)
                 plt.title(f"Histograma de {col} sin outliers")
             plt.show()
+
 
 def visualizar_distribucion(df, outliers=True):
     """
@@ -258,7 +277,7 @@ def visualizar_distribucion(df, outliers=True):
                 # Histograma
                 sns.histplot(data=df, x=col, kde=True, ax=ax2)
                 ax2.set_title(f"Histograma de {col}")
-            
+
             plt.tight_layout()
             plt.show()
     else:
@@ -272,17 +291,21 @@ def visualizar_distribucion(df, outliers=True):
                 if IQR > 0:  # Solo aplicar si hay dispersión en los datos
                     lower_bound = Q1 - 1.5 * IQR
                     upper_bound = Q3 + 1.5 * IQR
-                    df_no_outliers = df_no_outliers[(df_no_outliers[col] >= lower_bound) & 
-                                                (df_no_outliers[col] <= upper_bound)]
+                    df_no_outliers = df_no_outliers[(df_no_outliers[col] >= lower_bound) &
+                                                    (df_no_outliers[col] <= upper_bound)]
 
             fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 5))
-            if len(df_no_outliers[df_no_outliers[col] > 0]) > 0:  # Si hay valores mayores a 0
+            # Si hay valores mayores a 0
+            if len(df_no_outliers[df_no_outliers[col] > 0]) > 0:
                 # Boxplot
-                sns.boxplot(x=df_no_outliers[df_no_outliers[col] > 0][col], ax=ax1)
+                sns.boxplot(
+                    x=df_no_outliers[df_no_outliers[col] > 0][col], ax=ax1)
                 ax1.set_title(f"Boxplot de {col} sin outliers\n(valores > 0)")
                 # Histograma
-                sns.histplot(data=df_no_outliers[df_no_outliers[col] > 0], x=col, kde=True, ax=ax2)
-                ax2.set_title(f"Histograma de {col} sin outliers\n(valores > 0)")
+                sns.histplot(
+                    data=df_no_outliers[df_no_outliers[col] > 0], x=col, kde=True, ax=ax2)
+                ax2.set_title(
+                    f"Histograma de {col} sin outliers\n(valores > 0)")
             else:
                 # Boxplot
                 sns.boxplot(x=df_no_outliers[col], ax=ax1)
@@ -290,11 +313,12 @@ def visualizar_distribucion(df, outliers=True):
                 # Histograma
                 sns.histplot(data=df_no_outliers, x=col, kde=True, ax=ax2)
                 ax2.set_title(f"Histograma de {col} sin outliers")
-            
+
             plt.tight_layout()
             plt.show()
 
-def visualizar_categoricas (df,columna):
+
+def visualizar_categoricas(df, columna):
     """
     Genera gráficos de barras para variables categóricas en el DataFrame.
     df = DataFrame
