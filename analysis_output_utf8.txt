@@ -1,0 +1,462 @@
+INICIANDO AN┴LISIS CRISP-DM - ETAPAS 1 & 2
+Archivos encontrados en data/raw: ['Historico_Cierres.csv', 'Historico_Cierres_Tipo.csv', 'Historico_Facturas.csv', 'Informacion_Clientes.csv', 'Variables_Macro.csv']
+
+--> Cargado: Historico_Cierres.csv | Shape: (13117, 11)
+--> Cargado: Historico_Cierres_Tipo.csv | Shape: (13079, 10)
+--> Cargado: Historico_Facturas.csv | Shape: (61393, 9)
+--> Cargado: Informacion_Clientes.csv | Shape: (2697, 24)
+--> Cargado: Variables_Macro.csv | Shape: (906, 9)
+
+================================================================================
+EXPLORACIËN DE: Historico_Cierres.csv
+================================================================================
+
+--- INFORMACIËN GENERAL ---
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 13117 entries, 0 to 13116
+Data columns (total 11 columns):
+ #   Column                Non-Null Count  Dtype  
+---  ------                --------------  -----  
+ 0   NIT                   13080 non-null  object 
+ 1   Mes informe           13117 non-null  int64  
+ 2   Cliente               13117 non-null  object 
+ 3   Fecha de Vencimiento  13117 non-null  object 
+ 4   Dias de Mora          13117 non-null  int64  
+ 5   Calificaci¾n          13117 non-null  object 
+ 6   Cuenta Por Cobrar     13117 non-null  float64
+ 7   % de Deterioro        13117 non-null  float64
+ 8   Valor de Deterioro    13117 non-null  float64
+ 9   FID                   13117 non-null  object 
+ 10  Fideicomiso           13117 non-null  object 
+dtypes: float64(3), int64(2), object(6)
+memory usage: 1.1+ MB
+None
+
+--- PRIMERAS 5 FILAS ---
+                                                 NIT  Mes informe                                            Cliente Fecha de Vencimiento  Dias de Mora Calificaci¾n  Cuenta Por Cobrar  % de Deterioro  Valor de Deterioro                                                FID                                        Fideicomiso
+0  bda703a41ee55dcb911f17164009bc87636552bd5a641b...       202301  2fd44f99ebb5f4779baa8f8c3c18b8aa3778395b58c9bf...           15/09/2022             0            A          2380000.0          0.0022              5236.0  b527ab75d12cba5a48db8e39b6dc776fafe8d0a64454c1...  ef41b40f72aabddd7491277f62e2d14d7f8126b6c06831...
+1  a6f8bc5c429a36aba24d818a811da81ef5f66107c131f4...       202301  ddbb7aaaf540b1d826fe0a1b86d885bce851a6a10b17c1...           28/02/2023             0            A                0.0          0.0022                 0.0  6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d...  c7b36740e4a4084fabf1f8fe801822e3c638dcc964917a...
+2  f810167a3f88559f1cf90ac412c7d70c0de7f54742bcad...       202301  e7f467d21e1ae519b47b15c10f7de9368ada74e51d0e90...           28/02/2023             0            A                0.0          0.0022                 0.0  eaab7f29f0ebeeb28a5fcae7dba2f7b07bf2fa942bab4b...  f1cb9ef1cdaf60372aaecc67cf18b3e0faaec12172234f...
+3  c8ad84d88132c613b3343688e13ada573e8976d18b58ec...       202301  e9485dbb84aae5eb13fc27277fe3632c880ce13cf5c847...           28/02/2023             0            A                0.0          0.0022                 0.0  aa6df8861c8ad85418960d463c1bfff2ec9d257d58e5ab...  1fc58270cf6d565f7721f33a604319fd0fed003c975329...
+4  22a66f087c21865bab019d89cc8a7f328d7020e9bcd717...       202301  30976b83fed3f372533fa798d28600e70c3afc2db43d26...           28/02/2023             0            A                0.0          0.0022                 0.0  22a725be4cbf11a95514f3c8e93885502034dfc44b52a2...  dfbe8cbeeca35fc3e79319d0ce9094df25966e94cef76b...
+
+--- CALIDAD DE DATOS ---
+     Nulos   % Nulos    Tipo
+NIT     37  0.282077  object
+
+Filas duplicadas: 0
+
+--- ESTAD═STICAS (NumÚricas) ---
+         Mes informe  Dias de Mora  Cuenta Por Cobrar  % de Deterioro  Valor de Deterioro
+count   13117.000000  13117.000000       1.311700e+04    13117.000000        1.311700e+04
+mean   202383.757033     39.660441       1.076472e+07        0.051148        1.283968e+08
+std        74.369550    116.923362       6.146678e+07        0.170751        6.637940e+08
+min    202301.000000      0.000000       0.000000e+00        0.002200        0.000000e+00
+25%    202308.000000      0.000000       8.439770e+05        0.002200        3.403400e+03
+50%    202403.000000      0.000000       2.760800e+06        0.002200        9.316810e+03
+75%    202411.000000     22.000000       6.711600e+06        0.002200        2.149706e+06
+max    202506.000000   1689.000000       2.501958e+09        1.000000        9.946243e+09
+
+--- VALORES ┌NICOS (Categ¾ricas - Top 5) ---
+
+Columna: NIT
+f810167a3f88559f1cf90ac412c7d70c0de7f54742bcad3ea08245f943f3e1a2    788
+4bdc1c972ead844b4fb5a59b2881d8c8e97cac0c686e6df77b1978ea20da904f    247
+74eb4f169e598107c05f55d90ff36479515ba82406e5a192ed5f7d09a0d6207f    226
+1c264191d3b41e58e2138cc5c4478b4f041c4ef18605546218df25da9ba7ecfb    170
+b694691d12a1c891fbca90b8fe84ecaa9e24a2ae386e3bc8ca6b704d5aec1ab4    163
+Name: NIT, dtype: int64
+
+Columna: Cliente
+e7f467d21e1ae519b47b15c10f7de9368ada74e51d0e90c2bcd1ce0a42c2e435    479
+f680593f894208e7f1662740fcd6d61567254d81b54853560b7161e487c90896    247
+22f5e4ba3c2e773cae93eaebacf74b7ffeb47b41db615626a390484efbb163f2    225
+d6e0391d01477b8dab6f623db0a563338d1974c37c6d38b2ff45d8ed96646ade    170
+233b785063461440c718f4f10fb18c08cb79b925ade0542427e8f2ccdab29af7    170
+Name: Cliente, dtype: int64
+
+Columna: Fecha de Vencimiento
+15/09/2022    433
+31/03/2025    255
+31/08/2023    241
+12/05/2025    151
+31/10/2024    141
+Name: Fecha de Vencimiento, dtype: int64
+
+Columna: Calificaci¾n
+A    10138
+B     1411
+C      823
+D      417
+E      328
+Name: Calificaci¾n, dtype: int64
+
+Columna: FID
+6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b    263
+501477cb25062747ee72591c6a5041a9ab5890691428095d9723c9309fb3531c    209
+d294c6baad5e69a8553f9e589441192d277705e0cb1531fc9f6e1f1b34c44996    196
+4c458409cc73fbd7e66a7821d6b9dab08442779474ee3577ed82c3908cdb8feb    164
+3efe23d4782f792ff1b569a8a4c133c02c0d7c70d928da6cbe4d9c40df43b0a8    106
+Name: FID, dtype: int64
+
+Columna: Fideicomiso
+6882358497ac792d1c492112e07abcd2911ca9aef7c621f317ee6eac91dcb825    228
+1e4173c51597cc847c49cdce45ceac10c80210259e1fc3289dade1d76bf52520    209
+57b569ef931924c8ce655b3d6a56858a35d31ba0f67876b6d1d1513f724792f6    196
+bd821edbef9b021330a8f943eb1935b275e73c1dd830b9cc11bf16bd8f763285    164
+12e10429d07c6f947561cdeaa7bc075149d0e5878859175161d56fce0c55b7e8    106
+Name: Fideicomiso, dtype: int64
+
+[GR┴FICO] Matriz de correlaci¾n generada (en memoria) para Historico_Cierres.csv
+
+================================================================================
+EXPLORACIËN DE: Historico_Cierres_Tipo.csv
+================================================================================
+
+--- INFORMACIËN GENERAL ---
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 13079 entries, 0 to 13078
+Data columns (total 10 columns):
+ #   Column                Non-Null Count  Dtype  
+---  ------                --------------  -----  
+ 0   fecha_cierre          13079 non-null  object 
+ 1   NIT                   13079 non-null  object 
+ 2   Fecha_vencimiento     13079 non-null  object 
+ 3   Dias_mora             13079 non-null  int64  
+ 4   Calificaci¾n          13079 non-null  object 
+ 5   Saldo                 13079 non-null  float64
+ 6   Porcentaje_deterioro  13079 non-null  float64
+ 7   Deterioro             13079 non-null  float64
+ 8   FID                   13079 non-null  object 
+ 9   nombre_linea          13079 non-null  object 
+dtypes: float64(3), int64(1), object(6)
+memory usage: 1021.9+ KB
+None
+
+--- PRIMERAS 5 FILAS ---
+  fecha_cierre                                                NIT Fecha_vencimiento  Dias_mora Calificaci¾n      Saldo  Porcentaje_deterioro  Deterioro                                                FID                   nombre_linea
+0   31/01/2023  bda703a41ee55dcb911f17164009bc87636552bd5a641b...        15/09/2022          0            A  2380000.0                0.0022     5236.0  b527ab75d12cba5a48db8e39b6dc776fafe8d0a64454c1...                   Inmobiliario
+1   31/01/2023  a6f8bc5c429a36aba24d818a811da81ef5f66107c131f4...        28/02/2023          0            A        0.0                0.0022        0.0  6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d...                          Otros
+2   31/01/2023  f810167a3f88559f1cf90ac412c7d70c0de7f54742bcad...        28/02/2023          0            A        0.0                0.0022        0.0  eaab7f29f0ebeeb28a5fcae7dba2f7b07bf2fa942bab4b...                 Administraci¾n
+3   31/01/2023  c8ad84d88132c613b3343688e13ada573e8976d18b58ec...        28/02/2023          0            A        0.0                0.0022        0.0  aa6df8861c8ad85418960d463c1bfff2ec9d257d58e5ab...  Fondos de inversi¾n colectiva
+4   31/01/2023  c5cd27ae8413be0c194958c8ad37774a81b07873ab2642...        28/02/2023          0            A        0.0                0.0022        0.0  f4b94821159e4974022084b6d3735e1ff440cab7d97ce5...                   Inmobiliario
+
+--- CALIDAD DE DATOS ---
+Empty DataFrame
+Columns: [Nulos, % Nulos, Tipo]
+Index: []
+
+Filas duplicadas: 0
+
+--- ESTAD═STICAS (NumÚricas) ---
+          Dias_mora         Saldo  Porcentaje_deterioro     Deterioro
+count  13079.000000  1.307900e+04          13079.000000  1.307900e+04
+mean      39.762749  1.066333e+07              0.051274  9.475173e+05
+std      117.072985  6.072913e+07              0.170973  6.656428e+06
+min        0.000000  0.000000e+00              0.002200  0.000000e+00
+25%        0.000000  8.469825e+05              0.002200  2.065078e+03
+50%        0.000000  2.760800e+06              0.002200  6.073760e+03
+75%       22.000000  6.711600e+06              0.002200  2.236034e+04
+max     1689.000000  2.501958e+09              1.000000  1.813493e+08
+
+--- VALORES ┌NICOS (Categ¾ricas - Top 5) ---
+
+Columna: fecha_cierre
+31/01/2023    475
+31/03/2023    466
+28/02/2023    465
+31/08/2023    464
+31/05/2023    464
+Name: fecha_cierre, dtype: int64
+
+Columna: NIT
+f810167a3f88559f1cf90ac412c7d70c0de7f54742bcad3ea08245f943f3e1a2    788
+4bdc1c972ead844b4fb5a59b2881d8c8e97cac0c686e6df77b1978ea20da904f    247
+74eb4f169e598107c05f55d90ff36479515ba82406e5a192ed5f7d09a0d6207f    226
+1c264191d3b41e58e2138cc5c4478b4f041c4ef18605546218df25da9ba7ecfb    170
+b694691d12a1c891fbca90b8fe84ecaa9e24a2ae386e3bc8ca6b704d5aec1ab4    163
+Name: NIT, dtype: int64
+
+Columna: Fecha_vencimiento
+15/09/2022    433
+31/03/2025    255
+31/08/2023    234
+12/05/2025    151
+31/10/2024    141
+Name: Fecha_vencimiento, dtype: int64
+
+Columna: Calificaci¾n
+A    10102
+B     1410
+C      822
+D      417
+E      328
+Name: Calificaci¾n, dtype: int64
+
+Columna: FID
+6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b    263
+501477cb25062747ee72591c6a5041a9ab5890691428095d9723c9309fb3531c    209
+d294c6baad5e69a8553f9e589441192d277705e0cb1531fc9f6e1f1b34c44996    196
+4c458409cc73fbd7e66a7821d6b9dab08442779474ee3577ed82c3908cdb8feb    164
+3efe23d4782f792ff1b569a8a4c133c02c0d7c70d928da6cbe4d9c40df43b0a8    106
+Name: FID, dtype: int64
+
+Columna: nombre_linea
+Administraci¾n                   6062
+Inmobiliario                     3158
+GarantÝa                         2080
+Inversi¾n                         999
+Fondos de inversi¾n colectiva     490
+Name: nombre_linea, dtype: int64
+
+[GR┴FICO] Matriz de correlaci¾n generada (en memoria) para Historico_Cierres_Tipo.csv
+
+================================================================================
+EXPLORACIËN DE: Historico_Facturas.csv
+================================================================================
+
+--- INFORMACIËN GENERAL ---
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 61393 entries, 0 to 61392
+Data columns (total 9 columns):
+ #   Column             Non-Null Count  Dtype  
+---  ------             --------------  -----  
+ 0   Nro_factura        61393 non-null  int64  
+ 1   NIT                61393 non-null  object 
+ 2   Fecha_expedicion   61393 non-null  object 
+ 3   Total_factura      61393 non-null  float64
+ 4   Saldo              61393 non-null  float64
+ 5   Estado             61393 non-null  object 
+ 6   Valor_pagado       60598 non-null  float64
+ 7   Fecha_pago         60598 non-null  object 
+ 8   Fecha_vencimiento  61393 non-null  object 
+dtypes: float64(3), int64(1), object(5)
+memory usage: 4.2+ MB
+None
+
+--- PRIMERAS 5 FILAS ---
+   Nro_factura                                                NIT Fecha_expedicion  Total_factura      Saldo      Estado  Valor_pagado  Fecha_pago Fecha_vencimiento
+0       186537  42ecd8cb62d29625ad81914f17a48c219acb5d2be2daf0...       18/06/2025      1035398.0  1035398.0  CONFIRMADA           NaN         NaN        18/07/2025
+1       177214  46f7f7e4cdea7bc958d0999864222c63474cbd4f9751be...       28/08/2024       773500.0        0.0      PAGADA      773500.0  06/09/2024        27/09/2024
+2       161840  727d72342d46d4357539ec474dae79ce388234624a74d7...       25/11/2022     11900000.0        0.0      PAGADA    11900000.0  30/11/2022        25/12/2022
+3       161841  c1d637e1f5632d028983dbc5a46b8ea1dcae5a7aee1331...       25/11/2022     11900000.0        0.0      PAGADA    11900000.0  30/11/2022        25/12/2022
+4       177216  bec0e3be4b4d494a8b98d121499d2ff4d8bae3cdb5526b...       28/08/2024       773500.0        0.0      PAGADA      773500.0  06/09/2024        27/09/2024
+
+--- CALIDAD DE DATOS ---
+              Nulos   % Nulos     Tipo
+Valor_pagado    795  1.294936  float64
+Fecha_pago      795  1.294936   object
+
+Filas duplicadas: 0
+
+--- ESTAD═STICAS (NumÚricas) ---
+         Nro_factura  Total_factura         Saldo  Valor_pagado
+count   61393.000000   6.139300e+04  6.139300e+04  6.059800e+04
+mean   152576.350854   1.142424e+07  8.704420e+04  1.141587e+07
+std     19908.092780   1.163615e+08  4.811289e+06  1.158404e+08
+min    110405.000000   4.000000e+00  0.000000e+00 -5.894070e+06
+25%    137946.000000   9.854580e+05  0.000000e+00  9.854580e+05
+50%    153436.000000   1.785000e+06  0.000000e+00  1.785000e+06
+75%    168974.000000   3.210920e+06  0.000000e+00  3.133847e+06
+max    186779.000000   3.603731e+09  1.053704e+09  3.603731e+09
+
+--- VALORES ┌NICOS (Categ¾ricas - Top 5) ---
+
+Columna: NIT
+f810167a3f88559f1cf90ac412c7d70c0de7f54742bcad3ea08245f943f3e1a2    5093
+e3886f42bd67901603b9d6ee8d1f980366e732232587d3cd8489a4c2a7ac69be     877
+4bdc1c972ead844b4fb5a59b2881d8c8e97cac0c686e6df77b1978ea20da904f     868
+74eb4f169e598107c05f55d90ff36479515ba82406e5a192ed5f7d09a0d6207f     752
+37415d16240a8a2fb6f77843d8faaaa2e2ba793ce013ac51bdceb9b7035ea6ac     584
+Name: NIT, dtype: int64
+
+Columna: Fecha_expedicion
+14/09/2018    363
+15/08/2018    344
+12/11/2019    329
+12/12/2019    328
+11/11/2022    326
+Name: Fecha_expedicion, dtype: int64
+
+Columna: Estado
+PAGADA        60546
+CONFIRMADA      786
+AMORTIZADA       61
+Name: Estado, dtype: int64
+
+Columna: Fecha_pago
+29/12/2020    343
+29/12/2022    318
+26/02/2021    299
+20/12/2021    253
+28/02/2020    239
+Name: Fecha_pago, dtype: int64
+
+Columna: Fecha_vencimiento
+14/10/2018    363
+14/09/2018    344
+12/12/2019    329
+11/01/2020    328
+11/12/2022    326
+Name: Fecha_vencimiento, dtype: int64
+
+[GR┴FICO] Matriz de correlaci¾n generada (en memoria) para Historico_Facturas.csv
+
+================================================================================
+EXPLORACIËN DE: Informacion_Clientes.csv
+================================================================================
+
+--- INFORMACIËN GENERAL ---
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 2697 entries, 0 to 2696
+Data columns (total 24 columns):
+ #   Column                     Non-Null Count  Dtype  
+---  ------                     --------------  -----  
+ 0   NIT                        2697 non-null   object 
+ 1   PERIODO                    2697 non-null   object 
+ 2   FECHA_CORTE                2697 non-null   object 
+ 3   ACTIVOS_CORRIENTES         2697 non-null   float64
+ 4   GANANCIAS                  2697 non-null   float64
+ 5   PATRIMONIO                 2697 non-null   float64
+ 6   TOTAL_ACTIVOS              2697 non-null   float64
+ 7   ACTIVOS_NO_CORRIENTES      2697 non-null   float64
+ 8   PASIVOS_NO_CORRIENTES      2697 non-null   float64
+ 9   TOTAL_PASIVOS              2697 non-null   float64
+ 10  VAR_ACTIVOS_CORRIENTES     2697 non-null   float64
+ 11  VAR_GANANCIAS              2696 non-null   float64
+ 12  VAR_PATRIMONIO             2697 non-null   float64
+ 13  VAR_ACTIVOS                2697 non-null   float64
+ 14  VAR_Activos_NO_CORRIENTES  2658 non-null   float64
+ 15  VAR_PASIVOS_NO_CORRIENTES  2234 non-null   float64
+ 16  VAR_TOTAL_PASIVOS          2697 non-null   float64
+ 17  PASIVOS_CORRIENTES         2697 non-null   float64
+ 18  VAR_PASIVOS_CORRIENTES     2689 non-null   float64
+ 19  UTILIDAD_NETA              2697 non-null   float64
+ 20  LIQUIDEZ_CORRIENTE         2697 non-null   float64
+ 21  CAPITAL_TRABAJO            2697 non-null   float64
+ 22  ENDEUDAMIENTO              2697 non-null   float64
+ 23  ROA                        2697 non-null   float64
+dtypes: float64(21), object(3)
+memory usage: 505.8+ KB
+None
+
+--- PRIMERAS 5 FILAS ---
+                                                 NIT         PERIODO FECHA_CORTE  ACTIVOS_CORRIENTES  GANANCIAS  PATRIMONIO  TOTAL_ACTIVOS  ACTIVOS_NO_CORRIENTES  PASIVOS_NO_CORRIENTES  TOTAL_PASIVOS  VAR_ACTIVOS_CORRIENTES  VAR_GANANCIAS  VAR_PATRIMONIO  VAR_ACTIVOS  VAR_Activos_NO_CORRIENTES  VAR_PASIVOS_NO_CORRIENTES  VAR_TOTAL_PASIVOS  PASIVOS_CORRIENTES  VAR_PASIVOS_CORRIENTES  UTILIDAD_NETA  LIQUIDEZ_CORRIENTE  CAPITAL_TRABAJO  ENDEUDAMIENTO   ROA
+0  42ecd8cb62d29625ad81914f17a48c219acb5d2be2daf0...  Periodo Actual  2024-12-31           3124410.0  4689665.0   5333066.0      8298725.0              5174315.0               572387.0      2965659.0               -5.899258       4.720461        4.127462     5.567573                  13.952294                  -7.934034           8.260069           2393272.0               13.014398       211395.0                1.31         731138.0           0.36  2.55
+1  46f7f7e4cdea7bc958d0999864222c63474cbd4f9751be...  Periodo Actual  2024-12-31           2610192.0  3212577.0   3490463.0      4055185.0              1444993.0                91900.0       564722.0                1.965126       8.631509        7.890110     4.114398                   8.235528                 -28.752510         -14.401043            472822.0              -10.913192       255261.0                5.52        2137370.0           0.14  6.29
+2  727d72342d46d4357539ec474dae79ce388234624a74d7...  Periodo Actual  2024-12-31          14873094.0   178569.0  72520148.0    176408761.0            161535667.0             54704932.0    103888613.0              -75.593729     -96.818470       28.096833     3.917835                  48.445337                 -35.349543          -8.180499          49183681.0               72.405410     -5434108.0                0.30      -34310587.0           0.59 -3.08
+3  c1d637e1f5632d028983dbc5a46b8ea1dcae5a7aee1331...  Periodo Actual  2024-12-31           4777075.0  2626352.0   4706011.0     10919327.0              6142252.0              3416488.0      6213316.0               31.150374       1.340009        1.827833    15.424447                   5.578518                  26.821377          28.411070           2796828.0               30.407889        34728.0                1.71        1980247.0           0.57  0.32
+4  bec0e3be4b4d494a8b98d121499d2ff4d8bae3cdb5526b...  Periodo Actual  2024-12-31           2285184.0   389016.0   1066601.0      3228635.0               943451.0              1035163.0      2162034.0               26.866917      23.291266        8.290412    17.120328                  -1.254504                   0.000000          22.029060           1126871.0               52.988159        73490.0                2.03        1158313.0           0.67  2.28
+
+--- CALIDAD DE DATOS ---
+                           Nulos    % Nulos     Tipo
+VAR_GANANCIAS                  1   0.037078  float64
+VAR_Activos_NO_CORRIENTES     39   1.446051  float64
+VAR_PASIVOS_NO_CORRIENTES    463  17.167223  float64
+VAR_PASIVOS_CORRIENTES         8   0.296626  float64
+
+Filas duplicadas: 0
+
+--- ESTAD═STICAS (NumÚricas) ---
+       ACTIVOS_CORRIENTES     GANANCIAS    PATRIMONIO  TOTAL_ACTIVOS  ACTIVOS_NO_CORRIENTES  PASIVOS_NO_CORRIENTES  TOTAL_PASIVOS  VAR_ACTIVOS_CORRIENTES  VAR_GANANCIAS  VAR_PATRIMONIO  VAR_ACTIVOS  VAR_Activos_NO_CORRIENTES  VAR_PASIVOS_NO_CORRIENTES  VAR_TOTAL_PASIVOS  PASIVOS_CORRIENTES  VAR_PASIVOS_CORRIENTES  UTILIDAD_NETA  LIQUIDEZ_CORRIENTE  CAPITAL_TRABAJO  ENDEUDAMIENTO          ROA
+count        2.697000e+03  2.697000e+03  2.697000e+03   2.697000e+03           2.697000e+03           2.697000e+03   2.697000e+03             2697.000000    2696.000000     2697.000000  2697.000000                2658.000000                2234.000000        2697.000000        2.697000e+03             2689.000000   2.697000e+03             2697.00     2.697000e+03    2697.000000  2697.000000
+mean         3.953257e+07  1.432995e+07  5.232323e+07   1.001235e+08           6.059090e+07           2.246778e+07   4.780025e+07                     inf            NaN             inf     8.400161                        inf                        inf          50.597266        2.533247e+07                     inf   6.841689e+05                 inf     1.420010e+07       0.490211     0.305224
+std          1.835585e+08  1.024510e+08  3.612256e+08   6.542538e+08           5.049740e+08           2.178770e+08   3.606370e+08                     NaN            NaN             NaN    39.231915                        NaN                        NaN        1596.119446        1.616080e+08                     NaN   3.091616e+07                 NaN     7.111080e+07       0.376193    18.896470
+min          2.360000e+02 -1.158482e+09 -3.693270e+08   3.492400e+04           0.000000e+00           0.000000e+00   4.400000e+01              -99.973082           -inf    -9738.905322   -88.273867                -100.000000                -100.000000         -99.995350        0.000000e+00             -100.000000  -7.163675e+08                0.00    -7.547398e+08       0.000000  -466.270000
+25%          2.285184e+06  5.309360e+05  2.694815e+06   6.560634e+06           1.524487e+06           6.252600e+04   1.881623e+06               -9.947334      -3.418212       -0.277755    -3.250642                  -5.402293                 -20.408410         -13.936956        6.499620e+05              -21.910263  -9.247200e+04                1.24     4.963320e+05       0.220000    -0.820000
+50%          6.773525e+06  2.913462e+06  7.109467e+06   1.591291e+07           5.550666e+06           1.553668e+06   5.860487e+06                5.148806       6.516170        5.173016     3.321110                   0.064913                   0.000000           2.112175        2.705962e+06                2.611067   1.517300e+05                2.13     2.738723e+06       0.460000     1.300000
+75%          2.237744e+07  9.885292e+06  2.205031e+07   4.500957e+07           1.931168e+07           7.098026e+06   2.146353e+07               24.614799      23.420176       16.121695    14.480435                  13.003428                  27.529982          21.565622        1.080514e+07               31.490640   9.861180e+05                4.97     9.634135e+06       0.690000     4.880000
+max          7.010639e+09  1.628602e+09  9.930518e+09   2.688243e+10           1.987179e+10           1.018029e+10   1.695191e+10                     inf            inf             inf   881.711085                        inf                        inf       82314.048287        6.771615e+09                     inf   8.103450e+08                 inf     1.137252e+09       5.060000   158.560000
+
+--- VALORES ┌NICOS (Categ¾ricas - Top 5) ---
+
+Columna: NIT
+42ecd8cb62d29625ad81914f17a48c219acb5d2be2daf08eca62c02b09d2cbd0    1
+cc39c8244bbac068a82b3eb17df0e4bd2d0af39eb7f97f51a1fb25eb7cb26f43    1
+919755e968dc831bf96ab69d2bb3850936a0d3bbe99215b769c91e0143e7ba2b    1
+88033d49abf6a60d5f1ac7146cbfa3e87a73f95663e842601f5ca8bb8e47fc4b    1
+d5a94db2c08e9ea4b81ee1e5d227b5e577b54d88e4721bb97465db7582157cbb    1
+Name: NIT, dtype: int64
+
+Columna: PERIODO
+Periodo Actual    2697
+Name: PERIODO, dtype: int64
+
+Columna: FECHA_CORTE
+2024-12-31    2697
+Name: FECHA_CORTE, dtype: int64
+
+[GR┴FICO] Matriz de correlaci¾n generada (en memoria) para Informacion_Clientes.csv
+
+================================================================================
+EXPLORACIËN DE: Variables_Macro.csv
+================================================================================
+
+--- INFORMACIËN GENERAL ---
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 906 entries, 0 to 905
+Data columns (total 9 columns):
+ #   Column            Non-Null Count  Dtype  
+---  ------            --------------  -----  
+ 0   fecha_cierre      906 non-null    object 
+ 1   smmlv             498 non-null    float64
+ 2   ipc               318 non-null    float64
+ 3   pib               246 non-null    float64
+ 4   tasa              328 non-null    float64
+ 5   var_pct_ipc_1m    906 non-null    float64
+ 6   var_pct_pib_1m    906 non-null    float64
+ 7   var_pct_tasa_1m   906 non-null    float64
+ 8   var_pct_smmlv_1m  906 non-null    float64
+dtypes: float64(8), object(1)
+memory usage: 63.8+ KB
+None
+
+--- PRIMERAS 5 FILAS ---
+  fecha_cierre  smmlv  ipc  pib  tasa  var_pct_ipc_1m  var_pct_pib_1m  var_pct_tasa_1m  var_pct_smmlv_1m
+0   31/01/1950    NaN  NaN  NaN   NaN             0.0             0.0              0.0               0.0
+1   28/02/1950    NaN  NaN  NaN   NaN             0.0             0.0              0.0               0.0
+2   31/03/1950    NaN  NaN  NaN   NaN             0.0             0.0              0.0               0.0
+3   30/04/1950    NaN  NaN  NaN   NaN             0.0             0.0              0.0               0.0
+4   31/05/1950    NaN  NaN  NaN   NaN             0.0             0.0              0.0               0.0
+
+--- CALIDAD DE DATOS ---
+       Nulos    % Nulos     Tipo
+smmlv    408  45.033113  float64
+ipc      588  64.900662  float64
+pib      660  72.847682  float64
+tasa     578  63.796909  float64
+
+Filas duplicadas: 0
+
+--- ESTAD═STICAS (NumÚricas) ---
+              smmlv         ipc            pib        tasa  var_pct_ipc_1m  var_pct_pib_1m  var_pct_tasa_1m  var_pct_smmlv_1m
+count  4.980000e+02  318.000000     246.000000  328.000000      906.000000      906.000000       906.000000        906.000000
+mean   4.221766e+05    5.333176  218641.409756   23.148323       -0.074114        0.588351        -0.073856          6.884648
+std    3.547291e+05    2.563627  103017.801438    7.657671        3.393128        1.865850         1.818357          8.677760
+min    1.129800e+04    1.670000   81365.110000   13.550000      -19.029851      -17.942713       -18.214519          0.000000
+25%    9.870000e+04    3.340000  131806.090000   17.865000        0.000000        0.000000         0.000000          0.000000
+50%    3.580000e+05    5.150000  196500.165000   20.035000        0.000000        0.000000         0.000000          4.000000
+75%    6.443500e+05    6.495000  267460.840000   26.277500        0.000000        0.000000         0.000000          9.997463
+max    1.423500e+06   16.470000  453675.550000   52.310000       40.201005       11.855187        10.474308         27.000398
+
+--- VALORES ┌NICOS (Categ¾ricas - Top 5) ---
+
+Columna: fecha_cierre
+31/01/1950    1
+30/11/2001    1
+30/09/1999    1
+31/10/1999    1
+30/11/1999    1
+Name: fecha_cierre, dtype: int64
+
+[GR┴FICO] Matriz de correlaci¾n generada (en memoria) para Variables_Macro.csv
+
+================================================================================
+RESUMEN DE DATASETS
+================================================================================
+                      Dataset  Filas  Columnas  Nulos Totales  Duplicados
+0       Historico_Cierres.csv  13117        11             37           0
+1  Historico_Cierres_Tipo.csv  13079        10              0           0
+2      Historico_Facturas.csv  61393         9           1590           0
+3    Informacion_Clientes.csv   2697        24            511           0
+4         Variables_Macro.csv    906         9           2234           0
